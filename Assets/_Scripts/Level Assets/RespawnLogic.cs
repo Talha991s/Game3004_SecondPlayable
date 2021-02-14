@@ -23,6 +23,7 @@ public class RespawnLogic : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Hazard"))
         {
+            FindObjectOfType<SoundManager>().Play("Dying");
             transform.position = currentSpawnPoint.transform.position;
             transform.rotation = currentSpawnPoint.transform.rotation;
         }
