@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8e0a35e9b493a74793e53405792c8f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioMixer: {fileID: 24100000, guid: 77fd6420ad489e546b1794512001a596, type: 2}
   sounds:
   - name: Dying
     clip: {fileID: 8300000, guid: 3d355207b8054b34391937dc329e4ee7, type: 3}

@@ -10,6 +10,8 @@ using UnityEngine;
 [System.Serializable]
 public class Sounds 
 {
+    public AudioMixerGroup group;
+
     public string name;
 
     public AudioClip clip;
@@ -22,5 +24,6 @@ public class Sounds
 
     [HideInInspector]
     public AudioSource source;
+
 
 }
