@@ -1,3 +1,9 @@
+/*  Author: Salick Talhah
+ *  Date Created: February 14, 2021
+ *  Last Updated: February 14, 2021
+ *  Description: This script is used for the Options control. - Volume - graphic and resolution.
+ */
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
