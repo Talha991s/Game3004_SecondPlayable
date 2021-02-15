@@ -6,7 +6,7 @@ public class RespawnLogic : MonoBehaviour
 {
     [SerializeField] GameObject currentSpawnPoint;
     GameObject oldSpawnPoint;
-
+    public PlayerHealth health;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,7 +23,7 @@ public class RespawnLogic : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Hazard"))
         {
-            FindObjectOfType<SoundManager>().Play("Dying");
+            FindObjectOfType<SoundManager>().Play("Dying");   //this is the sound and was added by Salick for testing
             transform.position = currentSpawnPoint.transform.position;
             transform.rotation = currentSpawnPoint.transform.rotation;
         }
