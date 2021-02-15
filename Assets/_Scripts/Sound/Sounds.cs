@@ -11,6 +11,7 @@ using UnityEngine;
 public class Sounds 
 {
     public AudioMixerGroup group;
+    public AudioMixerGroup sfxgroup;
 
     public string name;
 

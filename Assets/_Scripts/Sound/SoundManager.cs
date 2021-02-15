@@ -6,7 +6,7 @@
     Follow these steps to add the sound where you want: 
     
     Step 1 : Click on the sound manager and add the sound in the inspector.
-    Step 2 : In the Inspector, Add the AudioMixer - (MainAudioMixer which is in the sound folder) 
+    Step 2 : In the Inspector, Add the AudioMixer corresponding to the sound your are putting i.e sfx or music- (AudioMixer which is in the sound folder) 
     Step 3 : In the Inspector add the sound name and adjust the volume and other data.
     Step 4 : In you code, add this line to where you write the function of the event this line --->
 
@@ -60,6 +60,7 @@ public class SoundManager : MonoBehaviour
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
             s.source.outputAudioMixerGroup = s.group;
+            s.source.outputAudioMixerGroup = s.sfxgroup;
         }
     }
     private void Start()

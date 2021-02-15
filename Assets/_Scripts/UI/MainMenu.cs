@@ -1,6 +1,6 @@
 /*  Author: Salick Talhah
  *  Date Created: January 31, 2021
- *  Last Updated: February 3, 2021
+ *  Last Updated: February 14, 2021
  *  Description: This script is used for the main UI control and scene Transition of the game.
  */
 

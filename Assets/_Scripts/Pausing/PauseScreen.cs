@@ -39,8 +39,8 @@ public class PauseScreen : MonoBehaviour
     }
 
     //Temporary; Used by TemporaryTransitionButton in HUD prefab
-    public void GameOver()
-    {
-        SceneManager.LoadScene("GameOver");
-    }
+    //public void GameOver()
+    //{
+    //    SceneManager.LoadScene("GameOver");
+    //}
 }
