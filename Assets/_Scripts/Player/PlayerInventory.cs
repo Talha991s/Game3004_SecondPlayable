@@ -19,6 +19,7 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] GameObject[] inventoryButtons; //Reference to the buttons in the inventory
 
     [SerializeField] Sprite[] inventorySprites; //Reference to whatever images you want for the items / inventory blank. 
+    private int inventorySlotTemp = 0;
     private int playerSeeds = 0; //how many seeds the player has collected in the level
     [Header ("Seed Settings"), Space]
     [SerializeField] private Text playerSeedTxt; //reference to the player seed textbox
@@ -66,8 +67,8 @@ public class PlayerInventory : MonoBehaviour
 
         if(playerItems.Count < inventorySize){ //check if theres room in inventory
             switch (_name){ //Check item name is existent
-                case "box":  //For example if box is the items string add it to the players item list
-                    playerItems.Add(_name); //Add item to players item list
+                case "seed":  //For example if seed is the items string add it to the players item list
+                    AddItemToList(_name);
                     break;
                 default:
                     Debug.Log("No string on item or non-existent"); //Error text
@@ -80,11 +81,20 @@ public class PlayerInventory : MonoBehaviour
             return false;//tells item that it wasnt collected
         }
     }
+    private void AddItemToList(string _name){
+        for(int item = 0; item < playerItems.Count; item ++){
+            if(playerItems[item] == null || playerItems[item] == ""){ //Check if item is empty or null so it can replace that space.
+                playerItems[item] = _name;
+                return;
+            }
+        }
+            playerItems.Add(_name); //Add item to players item list
+    }
     private void DisplayInventory(){ //Called when an item is picked up
          for(int i = 0; i < playerItems.Count; i++){ //Cycle through collected items
              switch(playerItems[i]){ //check strings of items
-                 case "box":  //example if item name is box display image on button
-                    inventoryButtons[i].GetComponent<Image>().sprite = inventorySprites[0]; //Set inventory button image to box sprite image
+                 case "seed":  //example if item name is seed display image on button
+                    inventoryButtons[i].GetComponent<Image>().sprite = inventorySprites[1]; //Set inventory button image to seed sprite image
                     break;
                 default:
                     Debug.Log("No picture for item set up"); //error text 
@@ -95,18 +105,20 @@ public class PlayerInventory : MonoBehaviour
     public void InventoryButtonClick(Button button){ //Function triggered when the player clicks an inventory slot button
         string itemClicked = ""; //temp string to hold item thats in slot that was clicked
 
-
         for(int i = 0; i < inventorySize; i++){ //cycle through all slots to check which button was clicked (in terms of 1-8)
             if(button.name == inventoryButtons[i].name){ //check names to find match
                 if(playerItems.Count > i){ //check if item even exists
                     itemClicked = playerItems[i]; //set temp string to hold item selected
+                    playerItems[i] = "";
+                    inventorySlotTemp = i;
+                    Invoke("ClearInventorySlot", 0.8f); //wait 1 second before changing button back to nothing so it doesnt show in game
                 }
                 break;
             }
         }
         switch(itemClicked){ //Do whatever function that item would do
-            case "box":  //for example if item was box, it would then do its function here. 
-                    Debug.Log("Box clicked");
+            case "seed":  //for example if item was seed, it would then do its function here. 
+                    Debug.Log("seed clicked");
                     
                     break;
                 default:
@@ -114,7 +126,12 @@ public class PlayerInventory : MonoBehaviour
                     break;
         }
         CloseInvetory(); //Close inventory when an item slot is clicked
+        
+        
 
+    }
+    private void ClearInventorySlot(){
+        inventoryButtons[inventorySlotTemp].GetComponent<Image>().sprite = inventorySprites[0]; //set button back to default image
     }
     /*
     - checks how many items in slots
