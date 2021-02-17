@@ -1,6 +1,6 @@
 /*  Author: Tyler McMillan
  *  Date Created: February 3, 2021
- *  Last Updated: February 3, 2021
+ *  Last Updated: February 17, 2021
  *  Description: This script is used for managing everything related to the players inventory. 
  */
 
@@ -11,7 +11,16 @@ using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour
 {
+    //Slider for inventory size, can be between 4 & 8 slots
+    [Header ("Invetory Settings"), Range(4.0f, 8.0f)]
+    [SerializeField] private int inventorySize = 8;
+    
+    private List<string> playerItems = new List<string>(); //players inventory items 
+    [SerializeField] GameObject[] inventoryButtons; //Reference to the buttons in the inventory
+
+    [SerializeField] Sprite[] inventorySprites; //Reference to whatever images you want for the items / inventory blank. 
     private int playerSeeds = 0; //how many seeds the player has collected in the level
+    [Header ("Seed Settings"), Space]
     [SerializeField] private Text playerSeedTxt; //reference to the player seed textbox
     private int totalSeeds = 0; //how many seed total in the entire level
     [SerializeField] private Text totalSeedTxt; //reference to the total seed textbox
@@ -20,7 +29,7 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private float seedShowTime = 3f; //How long to show the seed count for (seconds)
     private float scount = 0f; //Counter just to hold the amount of time elapsed since opened
 
-    
+    //---------------------- Unity Functions ------------------------------
     private void Awake(){
         //count how many seeds / total points the player has collected
         FindTotalSeeds();
@@ -36,9 +45,12 @@ public class PlayerInventory : MonoBehaviour
         }
         
     }
+
+    //------------------- Inventory Functions ---------------------------------
     public void OpenInvetory() //Button calls this function to open the inventory
     {
         gameObject.transform.SetAsLastSibling(); //Makes sure the inventory is in front of all other UI.
+        gameObject.GetComponent<Animator>().SetInteger("InventorySize", inventorySize); //changes inventory size in animator so it knows what inventory to animate.
         gameObject.GetComponent<Animator>().SetBool("OpenInventory", true); //Change bool in animator to true so it opens
         seedTextAnimator.SetBool("ShowCount", true);
     }
@@ -49,6 +61,69 @@ public class PlayerInventory : MonoBehaviour
         seedTextAnimator.SetBool("ShowCount", false);
         showSeedText = false;
     }
+
+    public bool CollectItem(string _name){ //Called when player enters trigger box of item
+
+        if(playerItems.Count < inventorySize){ //check if theres room in inventory
+            switch (_name){ //Check item name is existent
+                case "box":  //For example if box is the items string add it to the players item list
+                    playerItems.Add(_name); //Add item to players item list
+                    break;
+                default:
+                    Debug.Log("No string on item or non-existent"); //Error text
+                    return false;//tells item that it wasnt collected
+            }
+            DisplayInventory(); //Display inventory / update images
+            return true; //tells item that it was collected
+        }else{
+            Debug.Log("No room in inventory"); //Error text
+            return false;//tells item that it wasnt collected
+        }
+    }
+    private void DisplayInventory(){ //Called when an item is picked up
+         for(int i = 0; i < playerItems.Count; i++){ //Cycle through collected items
+             switch(playerItems[i]){ //check strings of items
+                 case "box":  //example if item name is box display image on button
+                    inventoryButtons[i].GetComponent<Image>().sprite = inventorySprites[0]; //Set inventory button image to box sprite image
+                    break;
+                default:
+                    Debug.Log("No picture for item set up"); //error text 
+                    break;
+             }
+         }
+    }
+    public void InventoryButtonClick(Button button){ //Function triggered when the player clicks an inventory slot button
+        string itemClicked = ""; //temp string to hold item thats in slot that was clicked
+
+
+        for(int i = 0; i < inventorySize; i++){ //cycle through all slots to check which button was clicked (in terms of 1-8)
+            if(button.name == inventoryButtons[i].name){ //check names to find match
+                if(playerItems.Count > i){ //check if item even exists
+                    itemClicked = playerItems[i]; //set temp string to hold item selected
+                }
+                break;
+            }
+        }
+        switch(itemClicked){ //Do whatever function that item would do
+            case "box":  //for example if item was box, it would then do its function here. 
+                    Debug.Log("Box clicked");
+                    
+                    break;
+                default:
+                    Debug.Log("No item in that slot"); //error message/tells user slot is empty
+                    break;
+        }
+        CloseInvetory(); //Close inventory when an item slot is clicked
+
+    }
+    /*
+    - checks how many items in slots
+    - checks if it already has that item
+    - adds to first slot with string
+    - clicking that item does a certain function. / some how get whatever button you press and get its name so you can match its name to an inventory slot or something. 
+    */
+
+    //----------------------SEED FUNCTIONS -----------------------
     public void CollectSeed(int _amount){
         //Gets called from "seed script" when player steps in a seeds trigger box, it gets sent that seeds value
         //that then is added to the players seed count, displayed, and resets counter to 0 for when the text disappears.
@@ -65,5 +140,7 @@ public class PlayerInventory : MonoBehaviour
         }
         totalSeedTxt.text = totalSeeds.ToString();
     }
+
+    
 }
 
