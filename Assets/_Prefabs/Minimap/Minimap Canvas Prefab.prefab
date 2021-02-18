@@ -394,18 +394,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetPlayerRef: {fileID: 0}
+  registeredEnemyRefs: []
+  registeredPickupRefs: []
+  registeredCheckpointRefs: []
+  registeredObjectiveRefs: []
   canvasContainerRef: {fileID: 0}
   minimapMaskRef: {fileID: 2153230190566547669}
   minimapBorderRef: {fileID: 423676513}
   miniMapCamContainerRef: {fileID: 1422123164}
   playerMinimapMarkerSprite: {fileID: 21300000, guid: b3dfcc33d3acc2d44a0be15636b943ca, type: 3}
   enemyMinimapMarkerSprite: {fileID: 21300000, guid: 626e1cade9516f244a4c552f3c13001f, type: 3}
+  pickupMinimapMarkerSprite: {fileID: 21300000, guid: ab942384e32a7ff488bb7df6ac3acf71, type: 3}
+  checkpointMinimapMarkerSprite: {fileID: 21300000, guid: 8f1d6c493e1bbff44bf1a7bf57bad656, type: 3}
+  objectiveMinimapMarkerSprite: {fileID: 21300000, guid: 2dd6cef2e3be6864db5ed33137bd348e, type: 3}
   camFollowSpeed: 10
   miniMapSize: 256
   miniMapZoom: 26
-  miniMapIconSizes: 6
-  playerIconSize: 0.3
+  miniMapIconSizes: 2
   playerIconYRotation: 0
   camOverheadDistance: 30
-  iconOverheadHeight: 2
+  iconOverheadHeight: 20
   rotateWithPlayer: 0

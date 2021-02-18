@@ -15,5 +15,6 @@ enum MinimapMarker
     ENEMY = 2,
     PICKUP = 3,
     CHECKPOINT = 4,
-    HAZARD = 5
+    HAZARD = 5,
+    OBJECTIVE = 6
 }

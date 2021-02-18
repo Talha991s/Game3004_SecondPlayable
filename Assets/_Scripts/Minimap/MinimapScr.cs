@@ -16,40 +16,41 @@ public class MinimapScr : MonoBehaviour
     [Header("Manualset References")]                                //References that have to be manually set beyond the prefab- Either by drag and drop or calling a function that assigns it.
     [SerializeField] private Transform targetPlayerRef;             //The player chracter that the minimap will follow and center on.
     [SerializeField] private Transform[] registeredEnemyRefs;
-    [SerializeField] private Transform[] registeredPickUpRefs;
+    [SerializeField] private Transform[] registeredPickupRefs;
+    [SerializeField] private Transform[] registeredCheckpointRefs;
+    [SerializeField] private Transform[] registeredObjectiveRefs;
 
     [Header("Preset References")]                                   //References that the prefab should already have OR that the script will automatically find.
     [SerializeField] private GameObject canvasContainerRef;         //Drag and Drop canvas gameobject here.
     [SerializeField] private GameObject minimapMaskRef;             //Image mask used to shape the minimap
     [SerializeField] private GameObject minimapBorderRef;
     [SerializeField] private Transform miniMapCamContainerRef;      //Container object that holds the camera for the minimap view.
-    [SerializeField] private Sprite playerMinimapMarkerSprite;      //The visual marker of how a player chracter will appear on the minimap.
-    [SerializeField] private Sprite enemyMinimapMarkerSprite;       //The visual marker of how a player chracter will appear on the minimap.
-    //[SerializeField] private Material playerMinimapMarkerRef;       //The visual marker of how a player chracter will appear on the minimap.
-    //[SerializeField] private Material enemyMinimapMarkerRef;        //The visual marker of how a player chracter will appear on the minimap.
+    [SerializeField] private Sprite playerMinimapMarkerSprite;      //The visual marker of how a player character will appear on the minimap.
+    [SerializeField] private Sprite enemyMinimapMarkerSprite;       //The visual marker of how an enemy will appear on the minimap.
+    [SerializeField] private Sprite pickupMinimapMarkerSprite;      //The visual marker of how a pickup will appear on the minimap.
+    [SerializeField] private Sprite checkpointMinimapMarkerSprite;  //The visual marker of how a checkpoint will appear on the minimap.
+    [SerializeField] private Sprite objectiveMinimapMarkerSprite;   //The visual marker of how an objective will appear on the minimap.
 
     [Header("Minimap Settings")]
     [SerializeField] private float camFollowSpeed = 10;             //How fast the minimap camera will follow the player. Note: this does not utilize smooth interpolation.
     [SerializeField] private float miniMapSize = 256;               //How big the minimap will appear in the screen.
     [SerializeField] private float miniMapZoom = 26;                //How much ground the minimap can cover. It's like an aerial view zoom effect.
     [SerializeField] private float miniMapIconSizes = 6;   
-    [SerializeField] private float playerIconSize = 6;              //This setting was added in case our player prefab scale differs from other objects and would need custom tweaking.
+    //[SerializeField] private float playerIconSize = 6;              //This setting was added in case our player prefab scale differs from other objects and would need custom tweaking.
     [SerializeField] private float playerIconYRotation = 0;         //This setting was added in case our player prefab forward direction differs from other objects and would need custom tweaking.
     [SerializeField] private float camOverheadDistance = 30;
     [SerializeField] private float iconOverheadHeight = 2;          //Note: Player scale affects this
     [SerializeField] private bool rotateWithPlayer = false;         //Set whether or not the minimap rotates with player oriantation
     //[SerializeField] private bool bUseCircleMask;
 
-
     private Transform initialPlayerRef;                             //Used to compare with targetPlayerRef to check if targetPlayerRef has been changed.
     private Transform initialPlayerIconRef;
-
-    
 
     private void Awake() 
     {
         InsureCanvasExists();               //Insures that this object is within Canvas.
         ExtractCameraToRootHierarchy();     //Extract the Minimap Camera from within the prefab and unto the root of the scene hierarchy.
+        ApplyMinimapLevelIcons();
     }
 
     private void Update() 
@@ -225,11 +226,11 @@ public class MinimapScr : MonoBehaviour
         GameObject minimapMarker; 
 
         //Temp marker type check. Will need to be modified as more marker types are accomodated.
-        if ( !(_markerType == MinimapMarker.PLAYER || _markerType == MinimapMarker.ENEMY) ) 
-        {
-            Debug.LogError("[Error] Invalid minimap marker type; Aborting operation...");
-            return;
-        }
+        //if ( !(_markerType == MinimapMarker.PLAYER || _markerType == MinimapMarker.ENEMY) ) 
+        //{
+        //    Debug.LogError("[Error] Invalid minimap marker type; Aborting operation...");
+        //    return;
+        //}
 
         //minimapMarker = GameObject.CreatePrimitive(PrimitiveType.Quad);
         //minimapMarker.name = "Minimap Icon";
@@ -243,11 +244,16 @@ public class MinimapScr : MonoBehaviour
         minimapMarker.layer = LayerMask.NameToLayer("Minimap Marker");
         minimapMarker.AddComponent<SpriteRenderer>();
 
-        minimapMarker.transform.SetParent(_targetObj);
-        minimapMarker.transform.localPosition = new Vector3(0, iconOverheadHeight, 0);
+        //Note: It's imperative scale is set before applying a parent; applying a parent object automatically adjusts the localScale such that the actual worldscale remains the same.
+        //minimapMarker.transform.localScale = new Vector3(miniMapIconSizes, miniMapIconSizes, 1); 
+        //minimapMarker.transform.position = new Vector3(_targetObj.position.x, _targetObj.position.y + iconOverheadHeight, _targetObj.position.z);
+        //minimapMarker.transform.localEulerAngles = new Vector3(90, _targetObj.localEulerAngles.y, _targetObj.localEulerAngles.z);
+        //minimapMarker.transform.SetParent(_targetObj);
+
+        //minimapMarker.transform.localPosition = new Vector3(0, iconOverheadHeight, 0);
         //minimapMarker.transform.position = new Vector3(0, transform.parent.position.y + iconOverheadHeight, 0);
-        minimapMarker.transform.localEulerAngles = new Vector3(90, 0, 0);
-        minimapMarker.transform.localScale = new Vector3(miniMapIconSizes, miniMapIconSizes, 1);
+        //minimapMarker.transform.localEulerAngles = new Vector3(90, 0, 0);
+        //minimapMarker.transform.localScale = new Vector3(miniMapIconSizes, miniMapIconSizes, 1);
 
         switch (_markerType) 
         {
@@ -256,11 +262,14 @@ public class MinimapScr : MonoBehaviour
             case MinimapMarker.PLAYER:
                 if (playerMinimapMarkerSprite) 
                 {
-                    //minimapMarker.GetComponent<MeshRenderer>().material = playerMinimapMarkerRef;
+                    minimapMarker.transform.localScale = new Vector3(miniMapIconSizes, miniMapIconSizes, 1); 
+                    minimapMarker.transform.position = new Vector3(_targetObj.position.x, _targetObj.position.y + iconOverheadHeight, _targetObj.position.z);
+                    minimapMarker.transform.localEulerAngles = new Vector3(90, _targetObj.localEulerAngles.y, _targetObj.localEulerAngles.z);
+                    minimapMarker.transform.SetParent(_targetObj);
                     minimapMarker.GetComponent<SpriteRenderer>().sprite = playerMinimapMarkerSprite;
 
                     //Custom settings
-                    minimapMarker.transform.localScale = new Vector3(playerIconSize, playerIconSize, 1);
+                    //minimapMarker.transform.localScale = new Vector3(playerIconSize, playerIconSize, 1);
                     if (playerIconYRotation != 0) 
                     {
                         minimapMarker.transform.localEulerAngles = new Vector3(90, playerIconYRotation, 0);
@@ -274,7 +283,10 @@ public class MinimapScr : MonoBehaviour
             case MinimapMarker.ENEMY:
                 if (enemyMinimapMarkerSprite) 
                 {
-                    //minimapMarker.GetComponent<MeshRenderer>().material = enemyMinimapMarkerRef;
+                    minimapMarker.transform.localScale = new Vector3(miniMapIconSizes, miniMapIconSizes, 1); 
+                    minimapMarker.transform.position = new Vector3(_targetObj.position.x, _targetObj.position.y + iconOverheadHeight - 1, _targetObj.position.z);
+                    minimapMarker.transform.localEulerAngles = new Vector3(90, _targetObj.localEulerAngles.y, _targetObj.localEulerAngles.z);
+                    minimapMarker.transform.SetParent(_targetObj);
                     minimapMarker.GetComponent<SpriteRenderer>().sprite = enemyMinimapMarkerSprite;
                 }
                 else 
@@ -282,10 +294,99 @@ public class MinimapScr : MonoBehaviour
                     Debug.LogError("[Error] Enemy minimap marker material reference missing!");
                 }
                 break;
+            case MinimapMarker.PICKUP:
+                if (pickupMinimapMarkerSprite) 
+                {
+                    minimapMarker.transform.localScale = new Vector3(miniMapIconSizes * 0.8f, miniMapIconSizes * 0.8f, 1); 
+                    minimapMarker.transform.position = new Vector3(_targetObj.position.x, _targetObj.position.y + iconOverheadHeight - 2, _targetObj.position.z);
+                    minimapMarker.transform.localEulerAngles = new Vector3(90, 0, 0);
+                    minimapMarker.transform.SetParent(_targetObj);
+                    minimapMarker.GetComponent<SpriteRenderer>().sprite = pickupMinimapMarkerSprite;
+                }
+                else 
+                {
+                    Debug.LogError("[Error] Pickup minimap marker material reference missing!");
+                }
+                break;
+            case MinimapMarker.CHECKPOINT:
+                if (checkpointMinimapMarkerSprite) 
+                {
+                    minimapMarker.transform.localScale = new Vector3(miniMapIconSizes, miniMapIconSizes, 1); 
+                    minimapMarker.transform.position = new Vector3(_targetObj.position.x, _targetObj.position.y + iconOverheadHeight - 2, _targetObj.position.z);
+                    minimapMarker.transform.localEulerAngles = new Vector3(90, 0, 0);
+                    minimapMarker.transform.SetParent(_targetObj);
+                    minimapMarker.GetComponent<SpriteRenderer>().sprite = checkpointMinimapMarkerSprite;
+                }
+                else 
+                {
+                    Debug.LogError("[Error] Checkpoint minimap marker material reference missing!");
+                }
+                break;
+            case MinimapMarker.OBJECTIVE:
+                if (objectiveMinimapMarkerSprite) 
+                {
+                    minimapMarker.transform.localScale = new Vector3(miniMapIconSizes, miniMapIconSizes, 1); 
+                    minimapMarker.transform.position = new Vector3(_targetObj.position.x, _targetObj.position.y + iconOverheadHeight - 2, _targetObj.position.z);
+                    minimapMarker.transform.localEulerAngles = new Vector3(90, 0, 0);
+                    minimapMarker.transform.SetParent(_targetObj);
+                    minimapMarker.GetComponent<SpriteRenderer>().sprite = objectiveMinimapMarkerSprite;
+                }
+                else 
+                {
+                    Debug.LogError("[Error] Objective minimap marker material reference missing!");
+                }
+                break;
             default:
+                Debug.LogError("[Error] Invalid minimap marker type; Aborting operation...");
                 return;
         }
 
+    }
+
+    //Apply minimap icons on player, enemy, pickups, and checkpoints
+    private void ApplyMinimapLevelIcons() {
+
+        //Check if player exists, but doesn't have a minimap icon. If so: add icon.
+        if (targetPlayerRef && !initialPlayerIconRef) {
+            HasTargetPlayerChanged();
+            AddMinimapMarker(targetPlayerRef, MinimapMarker.PLAYER);
+        }
+
+        //Check if there are any enemies registered to be tracked on the minimap. If so: add icon(s).
+        if (registeredEnemyRefs.Length > 0) {
+            for (int enemyIndex = 0; enemyIndex < registeredEnemyRefs.Length;  enemyIndex++) {
+                if (registeredEnemyRefs[enemyIndex]) {
+                    AddMinimapMarker(registeredEnemyRefs[enemyIndex], MinimapMarker.ENEMY);
+                }
+            }
+        }
+
+        //Check if there are any pickups registered to be tracked on the minimap. If so: add icon(s).
+        if (registeredPickupRefs.Length > 0) {
+            for (int pickupIndex = 0; pickupIndex < registeredPickupRefs.Length;  pickupIndex++) {
+                if (registeredPickupRefs[pickupIndex]) {
+                    AddMinimapMarker(registeredPickupRefs[pickupIndex], MinimapMarker.PICKUP);
+                }
+            }
+        }
+
+        //Check if there are any checkpoints registered to be tracked on the minimap. If so: add icon(s).
+        if (registeredCheckpointRefs.Length > 0) {
+            for (int checkpointIndex = 0; checkpointIndex < registeredCheckpointRefs.Length;  checkpointIndex++) {
+                if (registeredCheckpointRefs[checkpointIndex]) {
+                    AddMinimapMarker(registeredCheckpointRefs[checkpointIndex], MinimapMarker.CHECKPOINT);
+                }
+            }
+        }
+
+        //Check if there are any checkpoints registered to be tracked on the minimap. If so: add icon(s).
+        if (registeredObjectiveRefs.Length > 0) {
+            for (int objectiveIndex = 0; objectiveIndex < registeredObjectiveRefs.Length;  objectiveIndex++) {
+                if (registeredObjectiveRefs[objectiveIndex]) {
+                    AddMinimapMarker(registeredObjectiveRefs[objectiveIndex], MinimapMarker.OBJECTIVE);
+                }
+            }
+        }
     }
 
     //Set new player character that the minimap cam will follow.
