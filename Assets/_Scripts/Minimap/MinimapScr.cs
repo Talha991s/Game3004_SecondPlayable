@@ -15,14 +15,18 @@ public class MinimapScr : MonoBehaviour
 {
     [Header("Manualset References")]                                //References that have to be manually set beyond the prefab- Either by drag and drop or calling a function that assigns it.
     [SerializeField] private Transform targetPlayerRef;             //The player chracter that the minimap will follow and center on.
-    
+    [SerializeField] private Transform[] registeredEnemyRefs;
+    [SerializeField] private Transform[] registeredPickUpRefs;
+
     [Header("Preset References")]                                   //References that the prefab should already have OR that the script will automatically find.
     [SerializeField] private GameObject canvasContainerRef;         //Drag and Drop canvas gameobject here.
     [SerializeField] private GameObject minimapMaskRef;             //Image mask used to shape the minimap
     [SerializeField] private GameObject minimapBorderRef;
     [SerializeField] private Transform miniMapCamContainerRef;      //Container object that holds the camera for the minimap view.
-    [SerializeField] private Material playerMinimapMarkerRef;       //The visual marker of how a player chracter will appear on the minimap.
-    [SerializeField] private Material enemyMinimapMarkerRef;        //The visual marker of how a player chracter will appear on the minimap.
+    [SerializeField] private Sprite playerMinimapMarkerSprite;      //The visual marker of how a player chracter will appear on the minimap.
+    [SerializeField] private Sprite enemyMinimapMarkerSprite;       //The visual marker of how a player chracter will appear on the minimap.
+    //[SerializeField] private Material playerMinimapMarkerRef;       //The visual marker of how a player chracter will appear on the minimap.
+    //[SerializeField] private Material enemyMinimapMarkerRef;        //The visual marker of how a player chracter will appear on the minimap.
 
     [Header("Minimap Settings")]
     [SerializeField] private float camFollowSpeed = 10;             //How fast the minimap camera will follow the player. Note: this does not utilize smooth interpolation.
@@ -227,12 +231,17 @@ public class MinimapScr : MonoBehaviour
             return;
         }
 
-        minimapMarker = GameObject.CreatePrimitive(PrimitiveType.Quad);
+        //minimapMarker = GameObject.CreatePrimitive(PrimitiveType.Quad);
+        //minimapMarker.name = "Minimap Icon";
+        //minimapMarker.layer = LayerMask.NameToLayer("Minimap Marker");
+        //minimapMarker.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        //minimapMarker.GetComponent<MeshRenderer>().receiveShadows = false;
+        //Destroy(minimapMarker.GetComponent<MeshCollider>());
+
+        minimapMarker = new GameObject();
         minimapMarker.name = "Minimap Icon";
         minimapMarker.layer = LayerMask.NameToLayer("Minimap Marker");
-        minimapMarker.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-        minimapMarker.GetComponent<MeshRenderer>().receiveShadows = false;
-        Destroy(minimapMarker.GetComponent<MeshCollider>());
+        minimapMarker.AddComponent<SpriteRenderer>();
 
         minimapMarker.transform.SetParent(_targetObj);
         minimapMarker.transform.localPosition = new Vector3(0, iconOverheadHeight, 0);
@@ -245,9 +254,10 @@ public class MinimapScr : MonoBehaviour
             case MinimapMarker.NONE:
                 return;
             case MinimapMarker.PLAYER:
-                if (playerMinimapMarkerRef) 
+                if (playerMinimapMarkerSprite) 
                 {
-                    minimapMarker.GetComponent<MeshRenderer>().material = playerMinimapMarkerRef;
+                    //minimapMarker.GetComponent<MeshRenderer>().material = playerMinimapMarkerRef;
+                    minimapMarker.GetComponent<SpriteRenderer>().sprite = playerMinimapMarkerSprite;
 
                     //Custom settings
                     minimapMarker.transform.localScale = new Vector3(playerIconSize, playerIconSize, 1);
@@ -262,9 +272,10 @@ public class MinimapScr : MonoBehaviour
                 }
                 break;
             case MinimapMarker.ENEMY:
-                if (enemyMinimapMarkerRef) 
+                if (enemyMinimapMarkerSprite) 
                 {
-                    minimapMarker.GetComponent<MeshRenderer>().material = enemyMinimapMarkerRef;
+                    //minimapMarker.GetComponent<MeshRenderer>().material = enemyMinimapMarkerRef;
+                    minimapMarker.GetComponent<SpriteRenderer>().sprite = enemyMinimapMarkerSprite;
                 }
                 else 
                 {

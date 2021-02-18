@@ -398,13 +398,13 @@ MonoBehaviour:
   minimapMaskRef: {fileID: 2153230190566547669}
   minimapBorderRef: {fileID: 423676513}
   miniMapCamContainerRef: {fileID: 1422123164}
-  playerMinimapMarkerRef: {fileID: 2100000, guid: 0f9e88b67d90c364badcceb5f93b1988, type: 2}
-  enemyMinimapMarkerRef: {fileID: 2100000, guid: 09caf42d80ffcf942904de18535fc062, type: 2}
+  playerMinimapMarkerSprite: {fileID: 21300000, guid: b3dfcc33d3acc2d44a0be15636b943ca, type: 3}
+  enemyMinimapMarkerSprite: {fileID: 21300000, guid: 626e1cade9516f244a4c552f3c13001f, type: 3}
   camFollowSpeed: 10
   miniMapSize: 256
   miniMapZoom: 26
   miniMapIconSizes: 6
-  playerIconSize: 1
+  playerIconSize: 0.3
   playerIconYRotation: 0
   camOverheadDistance: 30
   iconOverheadHeight: 2
