@@ -223,14 +223,15 @@ public class MinimapScr : MonoBehaviour
     //Note: This marker object should only be seen by the minimap camera; turn off the Minimap Marker layer on other cameras.
     private void AddMinimapMarker(Transform _targetObj, MinimapMarker _markerType) 
     {
-        GameObject minimapMarker; 
+        GameObject minimapMarker;
 
         //Temp marker type check. Will need to be modified as more marker types are accomodated.
-        //if ( !(_markerType == MinimapMarker.PLAYER || _markerType == MinimapMarker.ENEMY) ) 
-        //{
-        //    Debug.LogError("[Error] Invalid minimap marker type; Aborting operation...");
-        //    return;
-        //}
+        if (!(_markerType == MinimapMarker.PLAYER || _markerType == MinimapMarker.ENEMY ||
+              _markerType == MinimapMarker.PICKUP || _markerType == MinimapMarker.CHECKPOINT ||
+              _markerType == MinimapMarker.OBJECTIVE)) {
+            Debug.LogError("[Error] Invalid minimap marker type; Aborting operation...");
+            return;
+        }
 
         //minimapMarker = GameObject.CreatePrimitive(PrimitiveType.Quad);
         //minimapMarker.name = "Minimap Icon";
