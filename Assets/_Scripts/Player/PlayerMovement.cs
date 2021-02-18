@@ -14,8 +14,8 @@ public class PlayerMovement : MonoBehaviour
     public Joystick joystick;
     public float sensitivity;
 
-    public Rigidbody rb;
-    public bool grounded;
+    Rigidbody rb;
+    bool grounded;
     
     
     Vector3 direction;
@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     public float turnSmoothVelocity;
     public float turnSmoothTime;
     float angle;
+    float smoothedAngle;
     Animator anim;
 
     public enum ControlSettings
@@ -34,7 +35,8 @@ public class PlayerMovement : MonoBehaviour
 
     public ControlSettings controlSettings;
     public bool inventory;
-    
+
+    public GameObject BulletPrefab;
 
     /// Events
     void Start()
@@ -57,6 +59,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Controls()
     {
+        ///Inventory 
         if(Input.GetKeyDown(KeyCode.Tab))
         {
             if (!inventory)
@@ -71,12 +74,13 @@ public class PlayerMovement : MonoBehaviour
             }
 
         }
-
+        ///Jumping
         if(Input.GetKeyDown(KeyCode.Space))
         {
             Jump();
         }
         
+        ///Running 
         // Handles changes in direction
         if(Input.GetKeyDown(KeyCode.A))
         {
@@ -116,8 +120,6 @@ public class PlayerMovement : MonoBehaviour
         {
             angle += 180;
         }
-
-
         // Side to Side Movemnt
         if (Input.GetKey(KeyCode.A))
         {
@@ -132,7 +134,6 @@ public class PlayerMovement : MonoBehaviour
         {
             hor = 0;
         }
-
         // Forward and Back movement
         if(Input.GetKey(KeyCode.W))
         {
@@ -146,13 +147,11 @@ public class PlayerMovement : MonoBehaviour
         {
             vert = 0;
         }
-
         direction = new Vector3(hor, 0, vert);
-
-        if(direction.magnitude > sensitivity)
+        if (direction.magnitude > sensitivity)
         {
             anim.SetInteger("AnimationPar", 1);
-            float smoothedAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, angle, ref turnSmoothVelocity,turnSmoothTime);
+            smoothedAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, angle, ref turnSmoothVelocity,turnSmoothTime);
             transform.rotation = Quaternion.Euler(0, smoothedAngle, 0);
 
             Vector3 moveDir = Quaternion.Euler(0, angle, 0) * Vector3.forward;
@@ -161,6 +160,16 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             anim.SetInteger("AnimationPar", 0);
+        }
+
+        ///Shooting 
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0))
+        {
+            anim.SetTrigger("Shoot");
+            var b = Instantiate(BulletPrefab,transform.position, transform.rotation);
+            b.GetComponent<LazerScript>().angle = smoothedAngle;
+            
+
         }
     }
 
@@ -187,8 +196,10 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+
     private void OnCollisionEnter(Collision other)
     {
+
         grounded = true;
     }
     private void OnCollisionExit(Collision other)
