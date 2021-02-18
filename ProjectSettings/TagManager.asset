@@ -10,7 +10,6 @@ TagManager:
   - Platform
   - Hazard
   - Spawn
-  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -19,8 +18,8 @@ TagManager:
   - Water
   - UI
   - Minimap Marker
-  - 
-  - 
+  - Ground
+  - Player
   - 
   - 
   - 
