@@ -79,6 +79,7 @@ public class PlayerHealth : MonoBehaviour
                 currentHealth = maxhealth;
             }
         }
+        healthBar.SetHealth(currentHealth);
     }
     
 }
