@@ -67,7 +67,7 @@ public class PlayerInventory : MonoBehaviour
 
         if(playerItems.Count < inventorySize){ //check if theres room in inventory
             switch (_name){ //Check item name is existent
-                case "seed":  //For example if seed is the items string add it to the players item list
+                case "Seed":  //For example if seed is the items string add it to the players item list
                     AddItemToList(_name);
                     break;
                 default:
@@ -93,7 +93,7 @@ public class PlayerInventory : MonoBehaviour
     private void DisplayInventory(){ //Called when an item is picked up
          for(int i = 0; i < playerItems.Count; i++){ //Cycle through collected items
              switch(playerItems[i]){ //check strings of items
-                 case "seed":  //example if item name is seed display image on button
+                 case "Seed":  //example if item name is seed display image on button
                     inventoryButtons[i].GetComponent<Image>().sprite = inventorySprites[1]; //Set inventory button image to seed sprite image
                     break;
                 default:
@@ -117,7 +117,7 @@ public class PlayerInventory : MonoBehaviour
             }
         }
         switch(itemClicked){ //Do whatever function that item would do
-            case "seed":  //for example if item was seed, it would then do its function here. 
+            case "Seed":  //for example if item was seed, it would then do its function here. 
                     Debug.Log("seed clicked");
                     
                     break;
