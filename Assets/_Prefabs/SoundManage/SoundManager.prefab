@@ -116,3 +116,19 @@ MonoBehaviour:
     pitch: 1
     loop: 0
     source: {fileID: 0}
+  - mainmusic: {fileID: 0}
+    sfxgroup: {fileID: 24300002, guid: 7fe6a62349153854aa8a76b6c19148a1, type: 2}
+    name: EatSeed
+    clip: {fileID: 8300000, guid: 7bdc6b438571ace4d83f23fa413c2f7d, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - mainmusic: {fileID: 0}
+    sfxgroup: {fileID: 24300002, guid: 7fe6a62349153854aa8a76b6c19148a1, type: 2}
+    name: InventoryClick
+    clip: {fileID: 8300000, guid: f475653ce12bc2341833c5535f776288, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
