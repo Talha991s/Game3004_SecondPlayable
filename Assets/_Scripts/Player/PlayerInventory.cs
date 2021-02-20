@@ -20,6 +20,8 @@ public class PlayerInventory : MonoBehaviour
 
     [SerializeField] Sprite[] inventorySprites; //Reference to whatever images you want for the items / inventory blank. 
     private int inventorySlotTemp = 0;
+    private bool itemExists = false;
+    //----------------SEED VATRIABLES----------------------------
     private int playerSeeds = 0; //how many seeds the player has collected in the level
     [Header ("Seed Settings"), Space]
     [SerializeField] private Text playerSeedTxt; //reference to the player seed textbox
@@ -64,22 +66,38 @@ public class PlayerInventory : MonoBehaviour
     }
 
     public bool CollectItem(string _name){ //Called when player enters trigger box of item
-
-        if(playerItems.Count < inventorySize){ //check if theres room in inventory
-            switch (_name){ //Check item name is existent
-                case "Seed":  //For example if seed is the items string add it to the players item list
-                    AddItemToList(_name);
-                    break;
-                default:
-                    Debug.Log("No string on item or non-existent"); //Error text
-                    return false;//tells item that it wasnt collected
+    
+        switch (_name){ //Check item name is existent
+            case "Seed":  //For example if seed is the items string add it to the players item list
+                itemExists = true;
+                break;
+            default:
+                Debug.Log("No string on item or non-existent"); //Error text
+                return false;//tells item that it wasnt collected
             }
-            DisplayInventory(); //Display inventory / update images
-            return true; //tells item that it was collected
-        }else{
-            Debug.Log("No room in inventory"); //Error text
-            return false;//tells item that it wasnt collected
+        if(itemExists){
+            if(playerItems.Count < inventorySize){ //check if theres room in inventory
+                AddItemToList(_name);
+                DisplayInventory(); //Display inventory / update images
+                return true; //tells item that it was collected
+            }
+            else if(playerItems.Count >= inventorySize){
+                for(int item = 0; item < playerItems.Count; item ++){
+                    if(playerItems[item] == null || playerItems[item] == ""){ //Check if item is empty or null so it can replace that space.
+                        AddItemToList(_name);
+                        DisplayInventory(); //Display inventory / update images
+                        return true; //tells item that it was collected
+                    }
+                }
+            }
+            else{
+                Debug.Log("No room in inventory"); //Error text
+                return true;//Tells that item was processed (even tho there wasnt room)
+            }
         }
+        
+            Debug.Log("Non existent item"); //Error text
+            return true;//Tells that item was not processed
     }
     private void AddItemToList(string _name){
         for(int item = 0; item < playerItems.Count; item ++){

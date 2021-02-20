@@ -24,6 +24,5 @@ public class SeedScript : MonoBehaviour
         if( invScreen.GetComponent<PlayerInventory>().CollectItem(itemName)){ //if item was collected destroy it
             Destroy(gameObject);
         }
-        //Destroy(gameObject);
     }
 }
