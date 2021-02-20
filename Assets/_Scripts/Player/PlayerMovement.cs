@@ -68,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                GameObject.Find("Inventory").GetComponent<PlayerInventory>().CloseInvetory();
+                GameObject.Find("Inventory").GetComponent<PlayerInventory>().CloseInvetory(true);
                 inventory = false;
             }
 

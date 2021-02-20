@@ -54,14 +54,17 @@ public class PlayerInventory : MonoBehaviour
     //------------------- Inventory Functions ---------------------------------
     public void OpenInvetory() //Button calls this function to open the inventory
     {
+        FindObjectOfType<SoundManager>().Play("InventoryClick");
         gameObject.transform.SetAsLastSibling(); //Makes sure the inventory is in front of all other UI.
         inventoryAnimator.SetInteger("InventorySize", inventorySize); //changes inventory size in animator so it knows what inventory to animate.
         inventoryAnimator.SetBool("OpenInventory", true); //Change bool in animator to true so it opens
         seedTextAnimator.SetBool("ShowCount", true);
     }
-     public void CloseInvetory() //Middle button in inventory calls this funtion to close the inventory
+    public void CloseInvetory(bool _closebutton) //Middle button in inventory calls this funtion to close the inventory
     {
-        
+        if(_closebutton){
+            FindObjectOfType<SoundManager>().Play("InventoryClick");
+        }
         inventoryAnimator.SetBool("OpenInventory", false); //Change bool in animator to false so it closes
         seedTextAnimator.SetBool("ShowCount", false);
         showSeedText = false;
@@ -156,9 +159,10 @@ public class PlayerInventory : MonoBehaviour
                     break; 
                 default:
                     Debug.Log("No item in that slot"); //error message/tells user slot is empty
+                    FindObjectOfType<SoundManager>().Play("InventoryClick");
                     break;
         }
-        CloseInvetory(); //Close inventory when an item slot is clicked
+        CloseInvetory(false); //Close inventory when an item slot is clicked
         
         
 

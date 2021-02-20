@@ -4485,6 +4485,7 @@ MonoBehaviour:
   totalSeedTxt: {fileID: 2878910794930684368}
   seedTextAnimator: {fileID: 5217510117206508975}
   seedShowTime: 3
+  healAmount: 20
 --- !u!1 &5977741110439895487
 GameObject:
   m_ObjectHideFlags: 0
@@ -6194,7 +6195,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3120622320543422716, guid: 2845dbd0511739944baa9b65165779ad, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3120622320543422716, guid: 2845dbd0511739944baa9b65165779ad, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
@@ -6231,6 +6232,10 @@ PrefabInstance:
     - target: {fileID: 3120622320543422716, guid: 2845dbd0511739944baa9b65165779ad, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: PlayerInventory, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3120622320543422716, guid: 2845dbd0511739944baa9b65165779ad, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3120622320543422716, guid: 2845dbd0511739944baa9b65165779ad, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
