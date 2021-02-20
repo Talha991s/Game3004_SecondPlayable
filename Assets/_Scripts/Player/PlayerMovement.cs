@@ -63,12 +63,12 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!inventory)
             {
-                GameObject.Find("Inventory").GetComponent<PlayerInventory>().OpenInvetory();
+                GameObject.FindGameObjectWithTag("Inventory").GetComponent<PlayerInventory>().OpenInvetory();
                 inventory = true;
             }
             else
             {
-                GameObject.Find("Inventory").GetComponent<PlayerInventory>().CloseInvetory(true);
+                GameObject.FindGameObjectWithTag("Inventory").GetComponent<PlayerInventory>().CloseInvetory(true);
                 inventory = false;
             }
 
