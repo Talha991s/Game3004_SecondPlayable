@@ -12,6 +12,7 @@ TagManager:
   - Spawn
   - Enemy
   - WinScene
+  - SuperSeed
   layers:
   - Default
   - TransparentFX

@@ -19,6 +19,7 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] GameObject[] inventoryButtons; //Reference to the buttons in the inventory
 
     [SerializeField] Sprite[] inventorySprites; //Reference to whatever images you want for the items / inventory blank. 
+    [SerializeField] Animator inventoryAnimator; //Reference to animator to change variable and make inventory trigger different anims
     private int inventorySlotTemp = 0;
     private bool itemExists = false;
     //----------------SEED VATRIABLES----------------------------
@@ -31,6 +32,7 @@ public class PlayerInventory : MonoBehaviour
     private bool showSeedText = false; //are you showing the seed count
     [SerializeField] private float seedShowTime = 3f; //How long to show the seed count for (seconds)
     private float scount = 0f; //Counter just to hold the amount of time elapsed since opened
+    [SerializeField] int healAmount = 20; //Amount to heal the player when they eat the seed?
 
     //---------------------- Unity Functions ------------------------------
     private void Awake(){
@@ -53,14 +55,14 @@ public class PlayerInventory : MonoBehaviour
     public void OpenInvetory() //Button calls this function to open the inventory
     {
         gameObject.transform.SetAsLastSibling(); //Makes sure the inventory is in front of all other UI.
-        gameObject.GetComponent<Animator>().SetInteger("InventorySize", inventorySize); //changes inventory size in animator so it knows what inventory to animate.
-        gameObject.GetComponent<Animator>().SetBool("OpenInventory", true); //Change bool in animator to true so it opens
+        inventoryAnimator.SetInteger("InventorySize", inventorySize); //changes inventory size in animator so it knows what inventory to animate.
+        inventoryAnimator.SetBool("OpenInventory", true); //Change bool in animator to true so it opens
         seedTextAnimator.SetBool("ShowCount", true);
     }
      public void CloseInvetory() //Middle button in inventory calls this funtion to close the inventory
     {
         
-        gameObject.GetComponent<Animator>().SetBool("OpenInventory", false); //Change bool in animator to false so it closes
+        inventoryAnimator.SetBool("OpenInventory", false); //Change bool in animator to false so it closes
         seedTextAnimator.SetBool("ShowCount", false);
         showSeedText = false;
     }
@@ -69,6 +71,9 @@ public class PlayerInventory : MonoBehaviour
     
         switch (_name){ //Check item name is existent
             case "Seed":  //For example if seed is the items string add it to the players item list
+                itemExists = true;
+                break;
+            case "SuperSeed":  
                 itemExists = true;
                 break;
             default:
@@ -114,7 +119,11 @@ public class PlayerInventory : MonoBehaviour
                  case "Seed":  //example if item name is seed display image on button
                     inventoryButtons[i].GetComponent<Image>().sprite = inventorySprites[1]; //Set inventory button image to seed sprite image
                     break;
+                case "SuperSeed":  //example if item name is seed display image on button
+                    inventoryButtons[i].GetComponent<Image>().sprite = inventorySprites[2]; //Set inventory button image to super seed sprite image
+                    break;
                 default:
+                    inventoryButtons[i].GetComponent<Image>().sprite = inventorySprites[0]; //Set inventory button image to empty sprite image
                     Debug.Log("No picture for item set up"); //error text 
                     break;
              }
@@ -137,8 +146,14 @@ public class PlayerInventory : MonoBehaviour
         switch(itemClicked){ //Do whatever function that item would do
             case "Seed":  //for example if item was seed, it would then do its function here. 
                     Debug.Log("seed clicked");
-                    
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().AddHealth(healAmount);
+                    FindObjectOfType<SoundManager>().Play("EatSeed");
                     break;
+            case "SuperSeed":  //Super seed gives double health as normal seed
+                    Debug.Log("Super seed clicked");
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().AddHealth(healAmount * 2);
+                    FindObjectOfType<SoundManager>().Play("EatSeed");
+                    break; 
                 default:
                     Debug.Log("No item in that slot"); //error message/tells user slot is empty
                     break;

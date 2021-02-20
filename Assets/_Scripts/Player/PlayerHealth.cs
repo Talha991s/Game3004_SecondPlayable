@@ -68,5 +68,17 @@ public class PlayerHealth : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
       //  gameover.SetActive(true);
     }
+
+
+
+    //Hopefully you dont mind salick but im writing this add health script, you can do as you wish with it.
+    public void AddHealth(int _amount){ //add amount of health from inventory screen when seed button is pressed
+        if(currentHealth < maxhealth){  //check if health is under max health
+            currentHealth += _amount; //add amount to current health
+            if(currentHealth > maxhealth){ //if health is greater then the max allowed set it to max allowed.
+                currentHealth = maxhealth;
+            }
+        }
+    }
     
 }
