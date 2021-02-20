@@ -1,19 +1,22 @@
 /*  Author: Salick Talhah
  *  Date Created: February 14, 2021
- *  Last Updated: February 14, 2021
+ *  Last Updated: February 20, 2021
  *  Description: This script is used to control the damage and amount of health, load the game over screen and check collision with hazard.
  */
 
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public GameObject gameover;
+    [SerializeField] private GameObject gameover;
+    [SerializeField] private GameObject win;
     public int maxhealth = 100;
     public int currentHealth;
     public HealthBar healthBar;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,8 +27,10 @@ public class PlayerHealth : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(currentHealth == 0)
+        if (currentHealth == 0)
         {
+           // FindObjectOfType<SoundManager>().Play("dead");
+            GameOver();
             gameover.SetActive(true);
         }
     }
@@ -41,6 +46,27 @@ public class PlayerHealth : MonoBehaviour
         {
             TakeDamage(20);
         }
+        if(other.gameObject.CompareTag("WinScene"))
+        {
+            win.SetActive(true);
+        }
+    
 
     }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            FindObjectOfType<SoundManager>().Play("Attacked");
+
+            TakeDamage(5);
+        }
+    }
+
+    private IEnumerator GameOver()
+    {
+        yield return new WaitForSeconds(2.0f);
+      //  gameover.SetActive(true);
+    }
+    
 }

@@ -40,10 +40,12 @@ public class SimplePausingScr : MonoBehaviour
     {
         if (_set) 
         {
+            FindObjectOfType<SoundManager>().Play("resume");
             Time.timeScale = 0;
             return;
         }
         Time.timeScale = 1;
+        FindObjectOfType<SoundManager>().Play("resume");
     }
 
     //Sets the timescale manually

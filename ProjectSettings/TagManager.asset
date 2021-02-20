@@ -10,6 +10,8 @@ TagManager:
   - Platform
   - Hazard
   - Spawn
+  - Enemy
+  - WinScene
   layers:
   - Default
   - TransparentFX

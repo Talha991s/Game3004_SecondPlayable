@@ -149,6 +149,7 @@ public class PlayerInventory : MonoBehaviour
         seedTextAnimator.SetBool("ShowCount", true);
         showSeedText = true;
         scount = 0f;
+        FindObjectOfType<SoundManager>().Play("collect");  //added by salick
     }
     private void FindTotalSeeds(){
         //Find all seeds in level by finding all "seed" tagged objects and adding up their total worth.

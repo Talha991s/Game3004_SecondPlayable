@@ -10,7 +10,7 @@ using UnityEngine;
 [System.Serializable]
 public class Sounds 
 {
-    public AudioMixerGroup group;
+    public AudioMixerGroup mainmusic;
     public AudioMixerGroup sfxgroup;
 
     public string name;

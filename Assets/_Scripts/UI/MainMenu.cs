@@ -15,6 +15,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
+        FindObjectOfType<SoundManager>().Play("click");
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
@@ -24,10 +25,12 @@ public class MainMenu : MonoBehaviour
     }
     public void PlayAgain()
     {
+        FindObjectOfType<SoundManager>().Play("click");
         SceneManager.LoadScene(1);
     }
     public void BackToMainMenu()
     {
+        FindObjectOfType<SoundManager>().Play("click");
         SceneManager.LoadScene(0);
     }
 

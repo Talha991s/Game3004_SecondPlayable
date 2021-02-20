@@ -43,17 +43,76 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8e0a35e9b493a74793e53405792c8f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioMixer: {fileID: 24100000, guid: 77fd6420ad489e546b1794512001a596, type: 2}
   sounds:
-  - name: Dying
-    clip: {fileID: 8300000, guid: 3d355207b8054b34391937dc329e4ee7, type: 3}
+  - mainmusic: {fileID: 0}
+    sfxgroup: {fileID: 24300002, guid: 7fe6a62349153854aa8a76b6c19148a1, type: 2}
+    name: Dying
+    clip: {fileID: 8300000, guid: 51f7f1c6a69b1e746919aacc261724b6, type: 3}
     volume: 1
     pitch: 1
     loop: 0
     source: {fileID: 0}
-  - name: Theme
+  - mainmusic: {fileID: 0}
+    sfxgroup: {fileID: 0}
+    name: Theme
     clip: {fileID: 8300000, guid: e2f552298fa0c9e4aba35ac9b1439b60, type: 3}
-    volume: 0.5
+    volume: 0.127
     pitch: 1
     loop: 1
+    source: {fileID: 0}
+  - mainmusic: {fileID: 0}
+    sfxgroup: {fileID: 24300002, guid: 7fe6a62349153854aa8a76b6c19148a1, type: 2}
+    name: Attacked
+    clip: {fileID: 8300000, guid: 4371da3b6ea56d549be044fef67104c0, type: 3}
+    volume: 0.765
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - mainmusic: {fileID: 0}
+    sfxgroup: {fileID: 24300002, guid: 7fe6a62349153854aa8a76b6c19148a1, type: 2}
+    name: collect
+    clip: {fileID: 8300000, guid: a9f5c6b7c36a3da41b01444f353f3faa, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - mainmusic: {fileID: 0}
+    sfxgroup: {fileID: 24300002, guid: 7fe6a62349153854aa8a76b6c19148a1, type: 2}
+    name: click
+    clip: {fileID: 8300000, guid: b3d7fb385a2c4dd45ab83c825b83cecb, type: 3}
+    volume: 0.765
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - mainmusic: {fileID: 0}
+    sfxgroup: {fileID: 24300002, guid: 7fe6a62349153854aa8a76b6c19148a1, type: 2}
+    name: resume
+    clip: {fileID: 8300000, guid: 189b8245495f21545914fed739e5acc2, type: 3}
+    volume: 0.765
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - mainmusic: {fileID: 0}
+    sfxgroup: {fileID: 24300002, guid: 7fe6a62349153854aa8a76b6c19148a1, type: 2}
+    name: pause
+    clip: {fileID: 8300000, guid: 6a030c83412b82a4da658110118fd378, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - mainmusic: {fileID: 0}
+    sfxgroup: {fileID: 24300002, guid: 7fe6a62349153854aa8a76b6c19148a1, type: 2}
+    name: dead
+    clip: {fileID: 8300000, guid: 34b6404177858fa489c76c5d1e7ca131, type: 3}
+    volume: 0.765
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - mainmusic: {fileID: 0}
+    sfxgroup: {fileID: 24300002, guid: 7fe6a62349153854aa8a76b6c19148a1, type: 2}
+    name: jump
+    clip: {fileID: 8300000, guid: 372084b81e605864081fb249acad1ca4, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 0
     source: {fileID: 0}

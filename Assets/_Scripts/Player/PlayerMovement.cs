@@ -39,6 +39,8 @@ public class PlayerMovement : MonoBehaviour
     /// Events
     void Start()
     {
+       // FindObjectOfType<SoundManager>().Play("Theme");
+
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
     }
@@ -184,6 +186,7 @@ public class PlayerMovement : MonoBehaviour
         if (grounded)
         {
             rb.AddForce(new Vector3(0, jumpForce, 0));
+            FindObjectOfType<SoundManager>().Play("jump");
         }
     }
 

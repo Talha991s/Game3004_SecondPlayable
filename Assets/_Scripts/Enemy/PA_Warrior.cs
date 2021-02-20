@@ -113,16 +113,18 @@ public class PA_Warrior : MonoBehaviour
         NavAgent.SetDestination(player.position);
         anim.SetBool("Moving", true);
     }
-    
-  
 
-        
-       
-  
-
-        
+ 
 
 
-    }
+
+
+
+
+
+
+
+
+}
 
 
