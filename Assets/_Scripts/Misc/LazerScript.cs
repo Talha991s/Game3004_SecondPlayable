@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class LazerScript : MonoBehaviour
 {
-    public GameObject target;
-    public float angle;
+    public Vector3 direction;
     public float speed;
 
     Collider col;
     public MeshRenderer mesh;
     public TrailRenderer trail;
     public Color32 color;
-    Vector3 direction;
+    
     
     void Start()
     {
@@ -22,11 +21,9 @@ public class LazerScript : MonoBehaviour
         trail.endColor = new Color32(0, 0, 0, 0);
         mesh.material.color = color;
         trail.startColor = color;
-        direction = Quaternion.Euler(0, angle, 0) * Vector3.forward;
         transform.position += Vector3.up;
     }
 
-    
     void Update()
     {
         transform.position += direction * speed * Time.deltaTime;
