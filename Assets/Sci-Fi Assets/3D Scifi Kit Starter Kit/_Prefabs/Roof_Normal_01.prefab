@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4281814864763546}
   m_Layer: 0
   m_Name: Roof_Normal_01
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 65330564059666050}
   m_Layer: 0
   m_Name: Roof_Normal_01
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
