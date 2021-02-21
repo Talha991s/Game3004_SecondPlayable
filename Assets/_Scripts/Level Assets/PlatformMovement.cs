@@ -78,7 +78,10 @@ public class PlatformMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.transform.SetParent(gameObject.transform);
+            if (platformType != PlatformType.BASIC)
+            {
+                collision.gameObject.transform.SetParent(gameObject.transform);
+            }
         }
     }
 
