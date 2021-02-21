@@ -2,7 +2,7 @@
  *  Date Created: January 29, 2021
  *  Last Updated: January 30, 2021
  *  Usage: Drag and drop the prefab this script is attached to into the Canvas as a child. You can also just drop this prefab anywhere in the scene and it will automatically find its rightful position within Canvas.
- *  Then use SetTargetPlayer() to add a player chracter object that the minimap camera will follow. Turn off the Minimap Marker layer on other cameras except the Minimap camera.
+ *  Then use SetTargetPlayer() to add a player character object that the minimap camera will follow. Turn off the Minimap Marker layer on other cameras except the Minimap camera.
  *  Description: 
  */
 
