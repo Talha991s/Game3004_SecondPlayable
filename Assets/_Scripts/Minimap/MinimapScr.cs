@@ -233,28 +233,10 @@ public class MinimapScr : MonoBehaviour
             return;
         }
 
-        //minimapMarker = GameObject.CreatePrimitive(PrimitiveType.Quad);
-        //minimapMarker.name = "Minimap Icon";
-        //minimapMarker.layer = LayerMask.NameToLayer("Minimap Marker");
-        //minimapMarker.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-        //minimapMarker.GetComponent<MeshRenderer>().receiveShadows = false;
-        //Destroy(minimapMarker.GetComponent<MeshCollider>());
-
         minimapMarker = new GameObject();
         minimapMarker.name = "Minimap Icon";
         minimapMarker.layer = LayerMask.NameToLayer("Minimap Marker");
         minimapMarker.AddComponent<SpriteRenderer>();
-
-        //Note: It's imperative scale is set before applying a parent; applying a parent object automatically adjusts the localScale such that the actual worldscale remains the same.
-        //minimapMarker.transform.localScale = new Vector3(miniMapIconSizes, miniMapIconSizes, 1); 
-        //minimapMarker.transform.position = new Vector3(_targetObj.position.x, _targetObj.position.y + iconOverheadHeight, _targetObj.position.z);
-        //minimapMarker.transform.localEulerAngles = new Vector3(90, _targetObj.localEulerAngles.y, _targetObj.localEulerAngles.z);
-        //minimapMarker.transform.SetParent(_targetObj);
-
-        //minimapMarker.transform.localPosition = new Vector3(0, iconOverheadHeight, 0);
-        //minimapMarker.transform.position = new Vector3(0, transform.parent.position.y + iconOverheadHeight, 0);
-        //minimapMarker.transform.localEulerAngles = new Vector3(90, 0, 0);
-        //minimapMarker.transform.localScale = new Vector3(miniMapIconSizes, miniMapIconSizes, 1);
 
         switch (_markerType) 
         {
@@ -345,45 +327,59 @@ public class MinimapScr : MonoBehaviour
     }
 
     //Apply minimap icons on player, enemy, pickups, and checkpoints
-    private void ApplyMinimapLevelIcons() {
+    private void ApplyMinimapLevelIcons() 
+    {
 
         //Check if player exists, but doesn't have a minimap icon. If so: add icon.
-        if (targetPlayerRef && !initialPlayerIconRef) {
+        if (targetPlayerRef && !initialPlayerIconRef) 
+        {
             HasTargetPlayerChanged();
             AddMinimapMarker(targetPlayerRef, MinimapMarker.PLAYER);
         }
 
         //Check if there are any enemies registered to be tracked on the minimap. If so: add icon(s).
-        if (registeredEnemyRefs.Length > 0) {
-            for (int enemyIndex = 0; enemyIndex < registeredEnemyRefs.Length;  enemyIndex++) {
-                if (registeredEnemyRefs[enemyIndex]) {
+        if (registeredEnemyRefs.Length > 0)
+        {
+            for (int enemyIndex = 0; enemyIndex < registeredEnemyRefs.Length;  enemyIndex++) 
+            {
+                if (registeredEnemyRefs[enemyIndex]) 
+                {
                     AddMinimapMarker(registeredEnemyRefs[enemyIndex], MinimapMarker.ENEMY);
                 }
             }
         }
 
         //Check if there are any pickups registered to be tracked on the minimap. If so: add icon(s).
-        if (registeredPickupRefs.Length > 0) {
-            for (int pickupIndex = 0; pickupIndex < registeredPickupRefs.Length;  pickupIndex++) {
-                if (registeredPickupRefs[pickupIndex]) {
+        if (registeredPickupRefs.Length > 0) 
+        {
+            for (int pickupIndex = 0; pickupIndex < registeredPickupRefs.Length;  pickupIndex++) 
+            {
+                if (registeredPickupRefs[pickupIndex]) 
+                {
                     AddMinimapMarker(registeredPickupRefs[pickupIndex], MinimapMarker.PICKUP);
                 }
             }
         }
 
         //Check if there are any checkpoints registered to be tracked on the minimap. If so: add icon(s).
-        if (registeredCheckpointRefs.Length > 0) {
-            for (int checkpointIndex = 0; checkpointIndex < registeredCheckpointRefs.Length;  checkpointIndex++) {
-                if (registeredCheckpointRefs[checkpointIndex]) {
+        if (registeredCheckpointRefs.Length > 0) 
+        {
+            for (int checkpointIndex = 0; checkpointIndex < registeredCheckpointRefs.Length;  checkpointIndex++) 
+            {
+                if (registeredCheckpointRefs[checkpointIndex]) 
+                {
                     AddMinimapMarker(registeredCheckpointRefs[checkpointIndex], MinimapMarker.CHECKPOINT);
                 }
             }
         }
 
         //Check if there are any checkpoints registered to be tracked on the minimap. If so: add icon(s).
-        if (registeredObjectiveRefs.Length > 0) {
-            for (int objectiveIndex = 0; objectiveIndex < registeredObjectiveRefs.Length;  objectiveIndex++) {
-                if (registeredObjectiveRefs[objectiveIndex]) {
+        if (registeredObjectiveRefs.Length > 0) 
+        {
+            for (int objectiveIndex = 0; objectiveIndex < registeredObjectiveRefs.Length;  objectiveIndex++) 
+            {
+                if (registeredObjectiveRefs[objectiveIndex]) 
+                {
                     AddMinimapMarker(registeredObjectiveRefs[objectiveIndex], MinimapMarker.OBJECTIVE);
                 }
             }
