@@ -13,10 +13,33 @@ public class SeedScript : MonoBehaviour
     public int seedWorth = 1; // how much is this seed worth.
     [SerializeField] string itemName;
 
-    void Awake(){
+    Vector3 startingPosition;
+
+    void Awake()
+    {
         invScreen = GameObject.FindGameObjectWithTag("Inventory");
         itemName = gameObject.tag;
     }
+
+    void Start()
+    {
+        startingPosition = transform.position;
+    }
+    void Update()
+    {
+        Hover();
+        Rotate();
+    }
+    void Hover()
+    {
+        transform.position = Vector3.Lerp(startingPosition, startingPosition + new Vector3(0.0f, 0.1f, 0.0f), Mathf.PingPong(Time.time * 2, 1.0f));
+    }
+
+    void Rotate()
+    {
+        transform.Rotate(new Vector3(0.0f, 0.0f, 1.0f));
+    }
+
     private void OnTriggerEnter(Collider col)
     {
         //When player steps in seeds trigger, add seed worth to players count and destroy seed.
