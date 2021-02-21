@@ -222,7 +222,7 @@ public class PlayerMovement : MonoBehaviour
             anim.SetInteger("AnimationPar", 1);
             
 
-            Vector3 moveDir = gameObject.transform.forward;
+            Vector3 moveDir = gameObject.transform.forward * vert;
             transform.position += moveDir * speed * Time.deltaTime;
         }
         else
