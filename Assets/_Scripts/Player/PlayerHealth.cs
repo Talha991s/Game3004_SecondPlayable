@@ -66,7 +66,7 @@ public class PlayerHealth : MonoBehaviour
     private IEnumerator GameOver()
     {
         yield return new WaitForSeconds(2.0f);
-      //  gameover.SetActive(true);
+        //  gameover.SetActive(true);
     }
 
 
