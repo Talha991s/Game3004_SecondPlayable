@@ -11,6 +11,9 @@ using UnityEngine.UI;
 
 public class PlayerInventory : MonoBehaviour
 {
+    [Header("Reference")]
+    [SerializeField] private PlayerHealth playerHealthRef;
+
     //Slider for inventory size, can be between 4 & 8 slots
     [Header ("Invetory Settings"), Range(4.0f, 8.0f)]
     [SerializeField] private int inventorySize = 8;
@@ -135,6 +138,11 @@ public class PlayerInventory : MonoBehaviour
     public void InventoryButtonClick(Button button){ //Function triggered when the player clicks an inventory slot button
         string itemClicked = ""; //temp string to hold item thats in slot that was clicked
 
+        if (!playerHealthRef) {
+            Debug.LogError("Error! Could not find reference to player health.");
+            return;
+        }
+
         for(int i = 0; i < inventorySize; i++){ //cycle through all slots to check which button was clicked (in terms of 1-8)
             if(button.name == inventoryButtons[i].name){ //check names to find match
                 if(playerItems.Count > i){ //check if item even exists
@@ -149,12 +157,14 @@ public class PlayerInventory : MonoBehaviour
         switch(itemClicked){ //Do whatever function that item would do
             case "Seed":  //for example if item was seed, it would then do its function here. 
                     Debug.Log("seed clicked");
-                    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().AddHealth(healAmount);
+                    playerHealthRef.AddHealth(healAmount);
+                    //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().AddHealth(healAmount);
                     FindObjectOfType<SoundManager>().Play("EatSeed");
                     break;
             case "SuperSeed":  //Super seed gives double health as normal seed
                     Debug.Log("Super seed clicked");
-                    GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().AddHealth(healAmount * 2);
+                    playerHealthRef.AddHealth(healAmount * 2);
+                    //GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerHealth>().AddHealth(healAmount * 2);
                     FindObjectOfType<SoundManager>().Play("EatSeed");
                     break; 
                 default:
