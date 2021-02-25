@@ -176,17 +176,15 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetKey(KeyCode.A))
         {
-            angle -= 1;
+            angle -= 125 * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            angle += 1;
+            angle += 125 * Time.deltaTime;
         }
-
         // Side to Side Movemnt
         if (Input.GetKey(KeyCode.A))
         {
-
             hor = -1;
         }
         else if(Input.GetKey(KeyCode.D))
